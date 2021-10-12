@@ -11,6 +11,20 @@ namespace web
         public int TopSpeed {set; get;}
         public Status Status {set; get;}
         public CarTypes CarType {set; get;}
-        public Driver Owner{set; get;}
+        public Driver Driver {set; get;}
+        public Guid DriverId {set; get;}
+        public RaceCar(){
+            Driver = new();
+        }
+        public RaceCar(RaceCarDto raceCarDto){
+            Id = Guid.NewGuid();
+            Nickname = raceCarDto.Nickname;
+            Model = raceCarDto.Model;
+            Year = raceCarDto.Year;
+            TopSpeed = raceCarDto.TopSpeed;
+            Status = raceCarDto.Status;
+            CarType = raceCarDto.CarType;
+            Driver = new();
+        }
     }
 }

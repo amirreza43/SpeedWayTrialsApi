@@ -1,12 +1,12 @@
 Descr - Method - Path - Parameter - Body - QueryString
-Add a car - POST - Cars - x - Car - x
-Get a car - GET - carId - X - x
-Find a Car - GET - Cars/search?nickname=value - X - X - nickname/ownerName/year/status/topSpeed
-Get all cars - GET - Cars/all - x - x - X
 Add a Driver - POST - Drivers - x - Driver - x
 Get a Driver - GET - DriverId - X - x
 Find a Driver - GET - Drivers/search?nickname=value - X - X - nickname/firstName/LastName/age/wins/losses
 Get all Drivers - GET - Drivers/all - x - x - X
+Add a car - POST - Cars/{driverId} - x - Car - x
+Get a car - GET - carId - X - x
+Find a Car - GET - Cars/search?nickname=value - X - X - nickname/ownerName/year/status/topSpeed
+Get all cars - GET - Cars/all - x - x - X
 Add a Race - POST - Races - x - Race - x
 Get a Race - GET - RaceId - X - x
 Find a Race - GET - Races/search?nickname=value - X - X - name/date

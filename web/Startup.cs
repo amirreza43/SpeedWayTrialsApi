@@ -27,6 +27,7 @@ namespace web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ISpeedWayRepo, SpeedWayRepo>();
             services.AddDbContext<Database>(options => options.UseSqlite(Configuration.GetConnectionString("Default")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -44,8 +45,6 @@ namespace web
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "web v1"));
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -40,17 +40,27 @@ namespace web.Migrations
                     b.Property<string>("Nickname")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("RaceId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Wins")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
+                    b.ToTable("Drivers");
+                });
+
+            modelBuilder.Entity("web.DriverRace", b =>
+                {
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RaceId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("DriverId", "RaceId");
+
                     b.HasIndex("RaceId");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("DriverRace");
                 });
 
             modelBuilder.Entity("web.Race", b =>
@@ -71,14 +81,12 @@ namespace web.Migrations
                     b.Property<int>("RaceCategory")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("WinnerId")
+                    b.Property<string>("WinnerName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WinnerId");
-
-                    b.ToTable("Races");
+                    b.ToTable("Trials");
                 });
 
             modelBuilder.Entity("web.RaceCar", b =>
@@ -90,13 +98,13 @@ namespace web.Migrations
                     b.Property<int>("CarType")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Model")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nickname")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("OwnerId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Status")
@@ -110,44 +118,51 @@ namespace web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("DriverId");
 
                     b.ToTable("RaceCars");
                 });
 
-            modelBuilder.Entity("web.Driver", b =>
+            modelBuilder.Entity("web.DriverRace", b =>
                 {
-                    b.HasOne("web.Race", null)
-                        .WithMany("Participants")
-                        .HasForeignKey("RaceId");
-                });
+                    b.HasOne("web.Driver", "Driver")
+                        .WithMany("DriverRace")
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("web.Race", b =>
-                {
-                    b.HasOne("web.Driver", "Winner")
-                        .WithMany()
-                        .HasForeignKey("WinnerId");
+                    b.HasOne("web.Race", "Race")
+                        .WithMany("DriverRace")
+                        .HasForeignKey("RaceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Winner");
+                    b.Navigation("Driver");
+
+                    b.Navigation("Race");
                 });
 
             modelBuilder.Entity("web.RaceCar", b =>
                 {
-                    b.HasOne("web.Driver", "Owner")
+                    b.HasOne("web.Driver", "Driver")
                         .WithMany("Cars")
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("web.Driver", b =>
                 {
                     b.Navigation("Cars");
+
+                    b.Navigation("DriverRace");
                 });
 
             modelBuilder.Entity("web.Race", b =>
                 {
-                    b.Navigation("Participants");
+                    b.Navigation("DriverRace");
                 });
 #pragma warning restore 612, 618
         }

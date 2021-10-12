@@ -10,7 +10,7 @@ namespace web
         [Required]
         public DateTime Date {set; get;}
         public DateTime BestTime {set; get;}
-        public Driver Winner {set; get;}
+        public string WinnerName {set; get;}
         [Required]
         public RaceCategories RaceCategory{set; get;}
     }

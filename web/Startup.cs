@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql;
 
 namespace web
 {
@@ -28,7 +29,8 @@ namespace web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ISpeedWayRepo, SpeedWayRepo>();
-            services.AddDbContext<Database>(options => options.UseSqlite(Configuration.GetConnectionString("Default")));
+            // services.AddDbContext<Database>(options => options.UseSqlite(Configuration.GetConnectionString("Default")));
+            services.AddDbContextPool<Database>(options => options.UseMySQL(Configuration.GetConnectionString("MysqlConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

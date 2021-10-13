@@ -24,7 +24,7 @@ namespace web
         Task<IEnumerable<RaceCar>> GetRaceCarsByYear(int year);
         Task<IEnumerable<RaceCar>> GetAllRaceCars();
         // //Race related funtions
-        // Task AddRace(RaceDto raceDto);
+        Task AddRace(Race race);
         // Task<Race> GetRace(Guid Id);
         // Task<IEnumerable<Race>> GetRacesByName(string name);
         // Task<IEnumerable<Race>> GetRacesByDate(DateTime date);

@@ -119,6 +119,11 @@ namespace web
             return racecars;
         }
 
+        //race functions
+        public async Task AddRace(Race race){
+            await _db.AddAsync(race);
+        }
+
         //database functions
         public async Task SaveAsync(){
             await _db.SaveChangesAsync();

@@ -76,7 +76,7 @@ namespace web
         public async Task<IEnumerable<RaceCar>> GetRaceCarsByCarType(CarTypes type){
             var racecars=await _db.RaceCars.Where(r=>r.CarType==type).Include(r=>r.Driver).ToListAsync();
 
-                  foreach(var racecar in racecars){
+            foreach(var racecar in racecars){
 
                 var driver =await _db.Drivers.Where(d=>d.Id==racecar.DriverId).FirstOrDefaultAsync();
                 racecar.Driver=driver;
@@ -86,9 +86,21 @@ namespace web
         }
 
         public async Task<IEnumerable<RaceCar>> GetRaceCarsByStatus(Status status){
-                       var racecars=await _db.RaceCars.Where(r=>r.Status==status).Include(r=>r.Driver).ToListAsync();
+            var racecars=await _db.RaceCars.Where(r=>r.Status==status).Include(r=>r.Driver).ToListAsync();
 
-                  foreach(var racecar in racecars){
+            foreach(var racecar in racecars){
+
+                var driver =await _db.Drivers.Where(d=>d.Id==racecar.DriverId).FirstOrDefaultAsync();
+                racecar.Driver=driver;
+            }
+            
+            return racecars;
+        }
+
+        public async Task<IEnumerable<RaceCar>> GetRaceCarsByYear(int year){
+            var racecars=await _db.RaceCars.Where(r=>r.Year==year).Include(r=>r.Driver).ToListAsync();
+
+            foreach(var racecar in racecars){
 
                 var driver =await _db.Drivers.Where(d=>d.Id==racecar.DriverId).FirstOrDefaultAsync();
                 racecar.Driver=driver;

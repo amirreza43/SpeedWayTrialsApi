@@ -94,5 +94,12 @@ namespace web
             if(racecars.Count()==0)return NotFound();
             return Ok(racecars);
         }
+
+        [HttpGet("RaceCars/Year/{year}")]
+        public async Task<IActionResult> GetRaceCarsByYear(int year){
+            var racecars=await _repository.GetRaceCarsByYear(year);
+            if(racecars.Count()==0)return NotFound();
+            return Ok(racecars);
+        }
     }
 }

@@ -67,9 +67,16 @@ namespace web
             return Ok(raceCar);
         }
 
-        [HttpGet ("RaceCars/{nickname}")]
+        [HttpGet ("RaceCars/Nickname/{nickname}")]
         public async Task<IActionResult> GetRaceCarsByNickName(string nickname){
             var racecars=await _repository.GetRaceCarsByNickName(nickname);
+            if(racecars.Count()==0) return NotFound();
+            return Ok(racecars);
+        }
+
+        [HttpGet("RaceCars/Model/{model}")]
+        public async Task<IActionResult> GetRaceCarsByModel(CarModels model){
+            var racecars=await _repository.GetRaceCarsByModel(model);
             if(racecars.Count()==0) return NotFound();
             return Ok(racecars);
         }

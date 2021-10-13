@@ -13,7 +13,6 @@ namespace web
     public string LastName { get; set; }
     [Required]
     public int Age { get; set; }
-    [Required]
     public DateTime BirthDate { get; set; }
     public string Nickname {set; get;}
     public int Wins {set; get;}

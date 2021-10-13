@@ -47,6 +47,20 @@ namespace web
             res.Driver = driver;
             return res;
         }
+
+        public async Task<IEnumerable<RaceCar>> GetRaceCarsByNickName(string nickname){
+            var racecars=await _db.RaceCars.Where(r=>r.Nickname.Contains(nickname)).Include(r=>r.Driver).ToListAsync();
+
+            foreach(var racecar in racecars){
+
+                var driver =await _db.Drivers.Where(d=>d.Id==racecar.DriverId).FirstOrDefaultAsync();
+                racecar.Driver=driver;
+            }
+            
+            return racecars;
+        }
+
+        //database functions
         public async Task SaveAsync(){
             await _db.SaveChangesAsync();
         }

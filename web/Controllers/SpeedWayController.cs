@@ -66,5 +66,12 @@ namespace web
             Console.WriteLine(raceCar.Driver.FirstName);
             return Ok(raceCar);
         }
+
+        [HttpGet ("RaceCars/{nickname}")]
+        public async Task<IActionResult> GetRaceCarsByNickName(string nickname){
+            var racecars=await _repository.GetRaceCarsByNickName(nickname);
+            if(racecars.Count()==0) return NotFound();
+            return Ok(racecars);
+        }
     }
 }

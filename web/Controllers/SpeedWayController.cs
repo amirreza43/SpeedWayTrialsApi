@@ -87,5 +87,12 @@ namespace web
             if(racecars.Count()==0)return NotFound();
             return Ok(racecars);
         }
+
+        [HttpGet("RaceCars/Status/{status}")]
+        public async Task<IActionResult> GetRaceCarsByStatus(Status status){
+            var racecars=await _repository.GetRaceCarsByStatus(status);
+            if(racecars.Count()==0)return NotFound();
+            return Ok(racecars);
+        }
     }
 }

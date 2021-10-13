@@ -20,7 +20,7 @@ namespace web
         Task<IEnumerable<RaceCar>> GetRaceCarsByNickName(string nickname);
         Task<IEnumerable<RaceCar>> GetRaceCarsByModel(CarModels model);
         Task<IEnumerable<RaceCar>> GetRaceCarsByCarType(CarTypes type);
-        // Task<IEnumerable<RaceCar>> GetRaceCarsByStatus(Status status);
+        Task<IEnumerable<RaceCar>> GetRaceCarsByStatus(Status status);
         // Task<IEnumerable<RaceCar>> GetRaceCarsByYear(int year);
         // Task<IEnumerable<RaceCar>> GetAllRaceCars();
         // //Race related funtions

@@ -28,11 +28,11 @@ namespace web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("MysqlConnection");
+            var connectionString = Configuration.GetConnectionString("Default");
             var serverVersion = ServerVersion.AutoDetect(connectionString);
             services.AddScoped<ISpeedWayRepo, SpeedWayRepo>();
             // services.AddDbContext<Database>(options => options.UseSqlite(Configuration.GetConnectionString("Default")));
-            services.AddDbContextPool<Database>(options => options.UseMySql(Configuration.GetConnectionString("MysqlConnection", serverVersion)));
+            services.AddDbContextPool<Database>(options => options.UseMySql(Configuration.GetConnectionString("MysqlConnection"), serverVersion));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -80,5 +80,12 @@ namespace web
             if(racecars.Count()==0) return NotFound();
             return Ok(racecars);
         }
+
+        [HttpGet("RaceCars/Type/{type}")]
+        public async Task<IActionResult> GetRaceCarsByType(CarTypes type){
+            var racecars=await _repository.GetRaceCarsByCarType(type);
+            if(racecars.Count()==0)return NotFound();
+            return Ok(racecars);
+        }
     }
 }

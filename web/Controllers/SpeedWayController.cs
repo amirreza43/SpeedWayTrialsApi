@@ -108,5 +108,20 @@ namespace web
             if(racecars.Count()==0)return NotFound();
             return Ok(racecars);
         }
+
+        [HttpPost("Race")]
+        public async Task<IActionResult> AddRace(RaceDto racedto){
+            Race race =new Race(racedto);
+            await _repository.AddRace(race);
+            await _repository.SaveAsync();
+            return CreatedAtAction("GetRace", new { race.Id }, race);
+        }
+
+        [HttpGet ("Race/{id}")]
+        public async Task<IActionResult> GetRace(Guid id){
+            var race = await _repository.GetRace(id);
+            if(race is null) return NotFound();
+            return Ok(race);
+        }
     }
 }

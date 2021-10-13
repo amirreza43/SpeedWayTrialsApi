@@ -124,6 +124,10 @@ namespace web
             await _db.AddAsync(race);
         }
 
+         public async Task<Race> GetRace(Guid Id){
+            return await _db.Trials.Where(t=>t.Id==Id).Include(t=>t.Drivers).FirstOrDefaultAsync();
+         }
+
         //database functions
         public async Task SaveAsync(){
             await _db.SaveChangesAsync();

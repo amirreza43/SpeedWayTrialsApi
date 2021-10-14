@@ -30,11 +30,11 @@ namespace web
             // db.Entry(some_obj).State = EntityState.Detached;
 
             // use either option below to log the queries to the console
-            options.LogTo(Console.WriteLine, LogLevel.Debug);
+            // options.LogTo(Console.WriteLine, LogLevel.Debug);
             // options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
 
             // displays parameter values in logs
-            options.EnableSensitiveDataLogging();
+            // options.EnableSensitiveDataLogging();
         }
 
     }

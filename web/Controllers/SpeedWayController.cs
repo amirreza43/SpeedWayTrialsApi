@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Text.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace web
 {
@@ -17,6 +18,7 @@ namespace web
         _repository = repository;
         }
         //Driver functions
+        [EnableCors("Policy1")]
         [HttpPost("Drivers")]
         public async Task<IActionResult> AddDriver(DriverDto driverDto){
             Driver driver = new Driver(driverDto);
@@ -24,6 +26,7 @@ namespace web
             await _repository.SaveAsync();
             return CreatedAtAction("GetDriver", new { driver.Id }, driver);
         }
+        [EnableCors("Policy1")]
         [HttpGet("Drivers/{id}")]
         public async Task<IActionResult> GetDriver(Guid Id){
             Console.WriteLine(Id);
@@ -31,6 +34,7 @@ namespace web
             if(driver is null) return NotFound();
             return Ok(driver);
         }
+        [EnableCors("Policy1")]
         [HttpGet("Drivers/search")]
         public async Task<IActionResult> SearchDrivers([FromQuery] string nickname, [FromQuery] string firstName, [FromQuery] string lastName,
         [FromQuery] int age, [FromQuery] int wins, [FromQuery] int losses){
@@ -43,6 +47,7 @@ namespace web
             if(losses is int l)  Drivers = await _repository.GetDriversByLosses(losses);
             return Ok(Drivers);
         }
+        [EnableCors("Policy1")]
         [HttpGet("Drivers/all")]
         public async Task<IActionResult> GetAllDrivers(){
             return Ok(await _repository.GetAllDrivers());

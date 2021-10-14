@@ -65,5 +65,15 @@ namespace test.Repositories
             var d = await _repo.GetAllDrivers();
             d.Count().Should().Be(1);
         }
+        //RaceCars Tests
+        [Fact]
+        public async Task ShouldSaveARaceCarToDatabase()
+        {
+            RaceCar car = new RaceCar(){ Nickname = "Johny", Year = 2018 , Model = CarModels.Maserati, Status = Status.AVAILABLE, CarType = CarTypes.sports };
+            Driver driver = new Driver(){ FirstName = "John", LastName = "Doe", Age = 30, BirthDate = DateTime.Now };
+            await _repo.AddRaceCar(car, driver);
+            await _repo.SaveAsync();
+            _db.RaceCars.Count().Should().Be(1);
+        } 
     }
 }

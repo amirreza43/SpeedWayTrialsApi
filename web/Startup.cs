@@ -28,11 +28,18 @@ namespace web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("MysqlConnection");
-            var serverVersion = ServerVersion.AutoDetect(connectionString);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy1",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader().AllowAnyMethod();
+                    });
+            });
+            var connectionString = Environment.GetEnvironmentVariable("PG_CONN_STRING");
+            services.AddDbContext<Database>(options => options.UseNpgsql(connectionString));
             services.AddScoped<ISpeedWayRepo, SpeedWayRepo>();
-            // services.AddDbContext<Database>(options => options.UseSqlite(Configuration.GetConnectionString("Default")));
-            services.AddDbContext<Database>(options => options.UseMySql(Configuration.GetConnectionString("MysqlConnection"), serverVersion));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,8 +56,14 @@ namespace web
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "web v1"));
             }
+            
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

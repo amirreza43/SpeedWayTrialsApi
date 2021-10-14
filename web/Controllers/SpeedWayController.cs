@@ -52,7 +52,9 @@ namespace web
         public async Task<IActionResult> GetAllDrivers(){
             return Ok(await _repository.GetAllDrivers());
         }
+        //more comments!
         //RaceCar functions
+        [EnableCors("Policy1")]
         [HttpPost("Drivers/{id}/RaceCar")]
         public async Task<IActionResult> AddRaceCar(Guid Id, RaceCarDto raceCarDto){
             var owner = await _repository.GetDriver(Id);
@@ -63,6 +65,7 @@ namespace web
             await _repository.SaveAsync();
             return CreatedAtAction("GetRaceCar", new { raceCar.Id }, raceCar);
         }
+        [EnableCors("Policy1")]
         [HttpGet("RaceCar/{id}")]
         public async Task<IActionResult> GetRaceCar(Guid Id){
             Console.WriteLine(Id);
@@ -71,42 +74,42 @@ namespace web
             Console.WriteLine(raceCar.Driver.FirstName);
             return Ok(raceCar);
         }
-
+        [EnableCors("Policy1")]
         [HttpGet ("RaceCars/Nickname/{nickname}")]
         public async Task<IActionResult> GetRaceCarsByNickName(string nickname){
             var racecars=await _repository.GetRaceCarsByNickName(nickname);
             if(racecars.Count()==0) return NotFound();
             return Ok(racecars);
         }
-
+        [EnableCors("Policy1")]
         [HttpGet("RaceCars/Model/{model}")]
         public async Task<IActionResult> GetRaceCarsByModel(CarModels model){
             var racecars=await _repository.GetRaceCarsByModel(model);
             if(racecars.Count()==0) return NotFound();
             return Ok(racecars);
         }
-
+        [EnableCors("Policy1")]
         [HttpGet("RaceCars/Type/{type}")]
         public async Task<IActionResult> GetRaceCarsByType(CarTypes type){
             var racecars=await _repository.GetRaceCarsByCarType(type);
             if(racecars.Count()==0)return NotFound();
             return Ok(racecars);
         }
-
+        [EnableCors("Policy1")]
         [HttpGet("RaceCars/Status/{status}")]
         public async Task<IActionResult> GetRaceCarsByStatus(Status status){
             var racecars=await _repository.GetRaceCarsByStatus(status);
             if(racecars.Count()==0)return NotFound();
             return Ok(racecars);
         }
-
+        [EnableCors("Policy1")]
         [HttpGet("RaceCars/Year/{year}")]
         public async Task<IActionResult> GetRaceCarsByYear(int year){
             var racecars=await _repository.GetRaceCarsByYear(year);
             if(racecars.Count()==0)return NotFound();
             return Ok(racecars);
         }
-
+        [EnableCors("Policy1")]
         [HttpGet("RaceCars")]
         public async Task<IActionResult> GetAllRaceCars(){
             var racecars=await _repository.GetAllRaceCars();

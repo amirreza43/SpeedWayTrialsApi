@@ -128,6 +128,30 @@ namespace web
             return await _db.Trials.Where(t=>t.Id==Id).Include(t=>t.Drivers).FirstOrDefaultAsync();
          }
 
+         public async Task<IEnumerable<Race>> GetRacesByName(string name){
+             return await _db.Trials.Where(t=>t.Name.Contains(name)).Include(t=>t.Drivers).ToListAsync();
+         }
+
+         public async Task<IEnumerable<Race>> GetRacesByDate(DateTime date){
+             return await _db.Trials.Where(t=>t.Date==date).Include(t=>t.Drivers).ToListAsync();
+         }
+
+         public async Task<IEnumerable<Race>> GetRacesByRaceCategory(RaceCategories category){
+             return await _db.Trials.Where(r=>r.RaceCategory==category).Include(r=>r.Drivers).ToListAsync();
+         }
+
+         public async Task<IEnumerable<Race>> GetAllRaces(){
+             return await _db.Trials.Include(r=>r.Drivers).ToListAsync();
+         }
+
+         public void RegisterDriverForRace(Driver driver, Race race){
+             driver.Races.Add(race);
+             race.Drivers.Add(driver);
+         }
+
+        public IEnumerable<Driver> GetAllDriversInRace(Race race){
+            return race.Drivers;
+        }
         //database functions
         public async Task SaveAsync(){
             await _db.SaveChangesAsync();

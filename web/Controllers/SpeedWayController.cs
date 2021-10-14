@@ -125,8 +125,57 @@ namespace web
         [HttpGet ("Race/{id}")]
         public async Task<IActionResult> GetRace(Guid id){
             var race = await _repository.GetRace(id);
+            foreach(var driver in race.Drivers){
+                Console.WriteLine(driver.FirstName);
+            }
             if(race is null) return NotFound();
             return Ok(race);
+        }
+
+        [HttpGet("Races/{name}")]
+        public async Task<IActionResult> GetRacesByName(string name){
+            var races=await _repository.GetRacesByName(name);
+            if(races.Count()==0)return NotFound();
+            return Ok(races);
+        }
+
+        [HttpGet("Races/date/{date}")]
+        public async Task<IActionResult> GetRacesByDate(DateTime date){
+            var races=await _repository.GetRacesByDate(date);
+            if(races.Count()==0)return NotFound();
+            return Ok(races);
+        }
+
+        [HttpGet("Races/category/{category}")]
+        public async Task<IActionResult> GetRacesByCategory(RaceCategories category){
+            var races=await _repository.GetRacesByRaceCategory(category);
+            if(races.Count()==0)return NotFound();
+            return Ok(races);
+        }
+
+        [HttpGet("Races")]
+        public async Task<IActionResult> GetAllRaces(){
+            var races=await _repository.GetAllRaces();
+            if(races.Count()==0)return NotFound();
+            return Ok(races);
+        }
+
+        [HttpPatch("Driver/{driverid}/Register/{raceid}")]
+        public async Task<IActionResult> RegisterDriverForRace(Guid driverid, Guid raceid){
+            var driver=await _repository.GetDriver(driverid);
+            if(driver==null)return BadRequest("Driver does not exist");
+            var race=await _repository.GetRace(raceid);
+            if(race==null)return BadRequest("Race does not exist");
+            _repository.RegisterDriverForRace(driver, race);
+            await _repository.SaveAsync();
+            return Ok();
+        }
+
+        [HttpGet("Race/{id}/Drivers")]
+        public async Task<IActionResult> GetAllDriversRegisteredForARace(Guid id){
+            var race=await _repository.GetRace(id);
+            var drivers= _repository.GetAllDriversInRace(race);
+            return Ok(drivers);
         }
     }
 }

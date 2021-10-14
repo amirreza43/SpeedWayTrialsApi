@@ -52,7 +52,6 @@ namespace web
         public async Task<IActionResult> GetAllDrivers(){
             return Ok(await _repository.GetAllDrivers());
         }
-        //more comments!
         //RaceCar functions
         [EnableCors("Policy1")]
         [HttpPost("Drivers/{id}/RaceCar")]
@@ -116,7 +115,7 @@ namespace web
             if(racecars.Count()==0)return NotFound();
             return Ok(racecars);
         }
-
+        [EnableCors("Policy1")]
         [HttpPost("Race")]
         public async Task<IActionResult> AddRace(RaceDto racedto){
             Race race =new Race(racedto);
@@ -155,7 +154,7 @@ namespace web
             if(races.Count()==0)return NotFound();
             return Ok(races);
         }
-
+        [EnableCors("Policy1")]
         [HttpGet("Races")]
         public async Task<IActionResult> GetAllRaces(){
             var races=await _repository.GetAllRaces();
